@@ -78,7 +78,6 @@ export async function login(
     data
   );
   if (error) {
-    console.log(error);
     return `error:${error.message}`;
   }
 
