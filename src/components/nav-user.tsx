@@ -25,7 +25,7 @@ export function NavUser({ user }: { user: Tables<"profiles"> | null }) {
     try {
       await logout();
       toast.success("Berhasil logout");
-      router.push("/login"); // redirect di client
+      router.push("/auth/login"); // redirect di client
     } catch (err) {
       console.error("Sign out error:", err);
       toast.error("Gagal logout. Silakan coba lagi.");

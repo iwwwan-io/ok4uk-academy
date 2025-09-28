@@ -31,7 +31,7 @@ export default async function RoleLayout({ children, params }: Props) {
   } = await supabase.auth.getUser();
 
   if (error || !user) {
-    redirect("/login");
+    redirect("/auth/login");
   }
   const { role } = await params;
 

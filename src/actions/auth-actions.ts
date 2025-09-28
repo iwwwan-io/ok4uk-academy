@@ -56,7 +56,7 @@ export async function registerUser(formData: FormData): Promise<string | null> {
 
     // 3. Finalize
     revalidatePath("/");
-    return "/login?message=Registrasi berhasil. Silakan cek email untuk verifikasi.";
+    return "/auth/login?message=Registrasi berhasil. Silakan cek email untuk verifikasi.";
   } catch (error) {
     console.error("Registration error:", error);
     return "error:Terjadi kesalahan saat registrasi.";
@@ -140,7 +140,7 @@ export async function resetPassword(formData: FormData) {
 
     revalidatePath("/");
     redirect(
-      "/login?message=Password reset email sent. Please check your inbox."
+      "/auth/login?message=Password reset email sent. Please check your inbox."
     );
   } catch (error) {
     throw error;
@@ -166,7 +166,7 @@ export async function updatePassword(formData: FormData) {
 
     revalidatePath("/");
     redirect(
-      "/login?message=Password updated successfully. Please log in with your new password."
+      "/auth/login?message=Password updated successfully. Please log in with your new password."
     );
   } catch (error) {
     throw error;

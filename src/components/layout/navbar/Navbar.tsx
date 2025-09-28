@@ -14,6 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState<NavigationLink[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     const loadLinks = async () => {
@@ -21,19 +22,45 @@ export default function Navbar() {
       setLinks(navLinks);
     };
 
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setIsLoggedIn(!!data.session);
+    const checkSessionAndProfile = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setIsLoggedIn(!!session);
+
+      if (session?.user) {
+        // ambil role dari profiles
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", session.user.id)
+          .single();
+
+        if (!error && profile) {
+          setUserRole(profile.role);
+        }
+      }
     };
 
     loadLinks();
-    checkSession();
+    checkSessionAndProfile();
 
     // listen supaya realtime kalau login/logout
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setIsLoggedIn(!!session);
+
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", session.user.id)
+          .single();
+        if (profile) setUserRole(profile.role);
+      } else {
+        setUserRole(null);
+      }
     });
 
     return () => {
@@ -67,14 +94,14 @@ export default function Navbar() {
         <div className="flex items-center gap-4 relative">
           <AnimatedThemeToggler />
 
-          {isLoggedIn ? (
+          {isLoggedIn && userRole ? (
             <Button
               asChild
               size="sm"
               variant="default"
               className="hidden md:inline-flex rounded-full"
             >
-              <Link href="/student">Dashboard</Link>
+              <Link href={`/${userRole}`}>Dashboard</Link>
             </Button>
           ) : (
             <Button
