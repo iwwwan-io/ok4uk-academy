@@ -7,6 +7,8 @@ import UserDataTable from "@/components/admin/user-data-table";
 import CourseManagementPage from "@/components/admin/course-management";
 import AccountPage from "@/components/sections/account";
 import AccountSettingsPage from "@/components/sections/account/account-settings";
+import StudentOverview from "@/components/students/student-overview";
+import AssessorOverview from "@/components/assessor/assessor-overview";
 
 // 🔠 Capitalize util
 function capitalize(str: string) {
@@ -29,7 +31,7 @@ export async function generateStaticParams() {
     "progress",
     "certificates",
     "evidences",
-    "account", // tambahkan account supaya dikenal
+    "account",
   ];
 
   return roles.flatMap((role) =>
@@ -75,16 +77,17 @@ export default async function Page({
     admin: {
       overview: () => <AdminOverview />,
       users: () => <UserDataTable />,
-      courses: () => <CourseManagementPage />,
+      courses: () => <CourseManagementPage section={subSectionId} />,
       account: (sub) =>
         sub === "settings" ? <AccountSettingsPage /> : <AccountPage />,
     },
     student: {
+      overview: () => <StudentOverview />,
       account: (sub) =>
         sub === "settings" ? <AccountSettingsPage /> : <AccountPage />,
     },
     assessor: {
-      // contoh jika nanti assessor butuh settings
+      overview: () => <AssessorOverview />,
       account: (sub) =>
         sub === "settings" ? <AccountSettingsPage /> : <AccountPage />,
     },

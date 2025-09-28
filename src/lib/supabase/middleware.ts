@@ -51,7 +51,10 @@ export async function updateSession(request: NextRequest) {
   if (
     request.nextUrl.pathname !== "/" &&
     !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
+    !request.nextUrl.pathname.startsWith("/courses") &&
+    !request.nextUrl.pathname.startsWith("/about") &&
+    !request.nextUrl.pathname.startsWith("/careers") &&
+    !request.nextUrl.pathname.startsWith("/nvq") &&
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
     // no user, potentially respond by redirecting the user to the login page
