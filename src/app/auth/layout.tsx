@@ -18,6 +18,7 @@ export default async function AuthLayout({
       .single();
 
     if (profile) {
+      console.log(profile.role);
       redirect(`/${profile.role}`);
     }
   }
