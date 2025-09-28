@@ -24,7 +24,7 @@ import { BookOpen, List, Settings, Award } from "lucide-react";
 import { getCourses } from "@/actions/course-actions";
 import type { Tables } from "@/types/database";
 
-export default function CourseManagementPage() {
+export default function CourseManagementPage({ section }: { section: string }) {
   // State for selected course to manage chapters
   const [selectedCourse, setSelectedCourse] = useState<{
     id: number;
@@ -74,7 +74,7 @@ export default function CourseManagementPage() {
         </p>
       </div>
 
-      <Tabs defaultValue="courses" className="w-full">
+      <Tabs defaultValue={"courses"} value={section} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="courses" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
