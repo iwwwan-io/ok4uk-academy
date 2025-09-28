@@ -70,7 +70,7 @@ export function MobileMenu({ open, setOpen, links }: Props) {
             )
           )}
           <Button asChild variant="outline" className="w-full mt-4">
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </Button>
         </nav>
       </SheetContent>

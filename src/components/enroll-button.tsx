@@ -21,7 +21,7 @@ export function EnrollButton({ course }: EnrollButtonProps) {
 
     if (!isAuthenticated.ok || !userData.id) {
       toast.error("Please log in to enroll in this course");
-      router.push("/login");
+      router.push("/auth/login");
       return;
     }
 
